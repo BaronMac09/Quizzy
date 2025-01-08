@@ -20,44 +20,21 @@
                 <input asp-for="Question.Text" class="form-control" />
                 <span asp-validation-for="Question.Text" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Question.Answers" class="control-label"></label>
-                <input asp-for="Question.Answers" class="form-control" />
-                <span asp-validation-for="Question.Answers" class="text-danger"></span>
-            </div>
             
             <!-- The question's answer(s) -->
-            @* <div class="form-group"> *@
-            @*     <label>Answers</label> *@
-            @* *@
-            @*     <div id="answerContainer"> *@
-            @*         <!-- Initially empty so that user can add as many answers as they like (6 is the maximum) --> *@
-            @*     </div> *@
-            @* *@
-            @*     <button type="button" id="addAnswerButton" class="btn btn-primary mt-2">Add Answer</button> *@
-            @* </div> *@
+            <div class="form-group">
+                <label>Answers</label>
+            
+                <div id="answerContainer">
+                    <!-- Initially empty so that user can add as many answers as they like (6 is the maximum) -->
+                </div>
+            
+                <button type="button" id="addAnswerButton" class="btn btn-primary mt-2">Add Answer</button>
+            </div>
 
             <!-- The question's correct answer -->
-            <div class="form-group">
-                <label asp-for="Question.CorrectAnswer" class="control-label"></label>
-                <input asp-for="Question.CorrectAnswer" class="form-control" />
-                <span asp-validation-for="Question.CorrectAnswer" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Question.LastModified" class="control-label"></label>
-                <input asp-for="Question.LastModified" class="form-control" />
-                <span asp-validation-for="Question.LastModified" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Question.QuizIds" class="control-label"></label>
-                <input asp-for="Question.QuizIds" class="form-control" />
-                <span asp-validation-for="Question.QuizIds" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
+            <div class="form-group mt-4">
+                <label>Choose the Correct Answer</label>
                 <div id="correctAnswerContainer">
                     <!-- Initially empty but sync with every new answer that is added -->
                 </div>
@@ -79,19 +56,51 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const answerContainer = document.getElementById("answerContainer");
+            const correctAnswerContainer = document.getElementById("correctAnswerContainer");
             const addAnswerButton = document.getElementById("addAnswerButton");
             let answerCount = 0;
 
             addAnswerButton.addEventListener("click", function () {
                 if (answerCount < @Model.MaxAnswers) {
                     const newAnswerIndex = answerCount++;
+
+                    // Create new answer input field
                     const newInputDiv = document.createElement("div");
-                    newInputDiv.classList.add("mb-2");
+                    newInputDiv.classList.add("mb-2", "d-flex", "align-items-center");
+                    const answerInputId = `answerInput${newAnswerIndex}`;
                     newInputDiv.innerHTML = `
-                        <input name="Question.Answers[${newAnswerIndex}]" 
-                               class="form-control" placeholder="Enter answer ${newAnswerIndex + 1}" />
+                        <input id="${answerInputId}" 
+                               name="Question.Answers[${newAnswerIndex}]" 
+                               class="form-control me-2" 
+                               placeholder="Enter answer ${newAnswerIndex + 1}" />
                     `;
                     answerContainer.appendChild(newInputDiv);
+
+                    // Create new radio button the newly inputted answer
+                    const newCorrectAnswerDiv = document.createElement("span");
+                    newCorrectAnswerDiv.classList.add("form-check-inline", "me-3");
+                    const radioButtonId = `correctAnswer${newAnswerIndex}`;
+                    newCorrectAnswerDiv.innerHTML = `
+                        <input type="radio" 
+                               name="Question.CorrectAnswer" 
+                               id="${radioButtonId}" 
+                               value="" 
+                               class="form-check-input" />
+                        <label for="${radioButtonId}" class="form-check-label">
+                            Answer ${newAnswerIndex + 1}
+                        </label>
+                    `;
+                    correctAnswerContainer.appendChild(newCorrectAnswerDiv);
+
+                    // Update radio button label when user types in the answer(s)'s input field
+                    const answerInput = document.getElementById(answerInputId);
+                    const correctAnswerLabel = newCorrectAnswerDiv.querySelector("label");
+                    const radioButton = newCorrectAnswerDiv.querySelector("input[type='radio']");
+
+                    answerInput.addEventListener("input", function () {
+                        correctAnswerLabel.textContent = answerInput.value || `Answer ${newAnswerIndex + 1}`;
+                        radioButton.value = answerInput.value;
+                    });
                 } else {
                     alert("You can only add up to 6 answers.");
                 }
@@ -99,5 +108,3 @@
         });
     </script>
 }
-
-

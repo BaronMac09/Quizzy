@@ -8,53 +8,32 @@
 <h1>All Questions</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Question[0].Text)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Question[0].Answers)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Question[0].CorrectAnswer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Question[0].LastModified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Question[0].QuizIds)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Question) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Answers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CorrectAnswer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuizIds)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="accordion" id="questionsAccordion">
+    @for (int i = 0; i < Model.Question.Count; i++)
+    {
+        var question = Model.Question[i];
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-@i">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@i" aria-expanded="false" aria-controls="collapse-@i">
+                    @question.Text
+                </button>
+            </h2>
+            <div id="collapse-@i" class="accordion-collapse collapse" aria-labelledby="heading-@i" data-bs-parent="#questionsAccordion">
+                <div class="accordion-body">
+                    <p><strong>Answers:</strong> @string.Join(", ", question.Answers)</p>
+                    <p><strong>Correct Answer:</strong> @question.CorrectAnswer</p>
+                    <p><strong>Last Modified:</strong> @question.LastModified</p>
+                    <p><strong>Quiz IDs:</strong> @string.Join(", ", question.QuizIds)</p>
+                    <div class="mt-3">
+                        <a asp-page="./Edit" asp-route-id="@question.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-page="./Details" asp-route-id="@question.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-page="./Delete" asp-route-id="@question.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

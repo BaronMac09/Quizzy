@@ -17,25 +17,25 @@ public static class DbInitialiser
         {
             new Question
             {
-                Id = 1, QuizIds = [1],
+                Id = 1, QuizIds = [],
                 Text = "What is the capital of France?", CorrectAnswer = "Paris",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 2, QuizIds = [1],
+                Id = 2, QuizIds = [],
                 Text = "What is the capital of Germany?", CorrectAnswer = "Berlin",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 3, QuizIds = [1],
+                Id = 3, QuizIds = [],
                 Text = "What is the capital of Spain?", CorrectAnswer = "Madrid",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 4, QuizIds = [1],
+                Id = 4, QuizIds = [],
                 Text = "What is the capital of the UK?", CorrectAnswer = "London",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },

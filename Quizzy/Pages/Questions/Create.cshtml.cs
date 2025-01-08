@@ -26,18 +26,20 @@ namespace Quizzy.Pages.Questions
         }
 
         [BindProperty]
-        public Question Question { get; set; } = default!;
+        public Question Question { get; set; } 
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            // Set the LastModified property to the current date and time
+            Question.LastModified = DateTime.Now;
+            
             if (!ModelState.IsValid)
             {
                 return Page();
             }
             
-            // Set the LastModified property to the current date and time
-            Question.LastModified = DateTime.Now;
+            
             _context.Questions.Add(Question);
             await _context.SaveChangesAsync();
 
