@@ -1,0 +1,103 @@
+@page
+@model Quizzy.Pages.Questions.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Question</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- The question's content -->
+            <div class="form-group">
+                <label asp-for="Question.Text" class="control-label"></label>
+                <input asp-for="Question.Text" class="form-control" />
+                <span asp-validation-for="Question.Text" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Question.Answers" class="control-label"></label>
+                <input asp-for="Question.Answers" class="form-control" />
+                <span asp-validation-for="Question.Answers" class="text-danger"></span>
+            </div>
+            
+            <!-- The question's answer(s) -->
+            @* <div class="form-group"> *@
+            @*     <label>Answers</label> *@
+            @* *@
+            @*     <div id="answerContainer"> *@
+            @*         <!-- Initially empty so that user can add as many answers as they like (6 is the maximum) --> *@
+            @*     </div> *@
+            @* *@
+            @*     <button type="button" id="addAnswerButton" class="btn btn-primary mt-2">Add Answer</button> *@
+            @* </div> *@
+
+            <!-- The question's correct answer -->
+            <div class="form-group">
+                <label asp-for="Question.CorrectAnswer" class="control-label"></label>
+                <input asp-for="Question.CorrectAnswer" class="form-control" />
+                <span asp-validation-for="Question.CorrectAnswer" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Question.LastModified" class="control-label"></label>
+                <input asp-for="Question.LastModified" class="form-control" />
+                <span asp-validation-for="Question.LastModified" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Question.QuizIds" class="control-label"></label>
+                <input asp-for="Question.QuizIds" class="form-control" />
+                <span asp-validation-for="Question.QuizIds" class="text-danger"></span>
+            </div>
+            
+            @* <div class="form-group"> *@
+            @*     <div id="correctAnswerContainer"> *@
+            @*         <!-- Initially empty but sync with every new answer that is added --> *@
+            @*     </div> *@
+            @* </div> *@
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@* JavaScript supporting the variability of answers of each question *@
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const answerContainer = document.getElementById("answerContainer");
+            const addAnswerButton = document.getElementById("addAnswerButton");
+            let answerCount = 0;
+
+            addAnswerButton.addEventListener("click", function () {
+                if (answerCount < @Model.MaxAnswers) {
+                    const newAnswerIndex = answerCount++;
+                    const newInputDiv = document.createElement("div");
+                    newInputDiv.classList.add("mb-2");
+                    newInputDiv.innerHTML = `
+                        <input name="Question.Answers[${newAnswerIndex}]" 
+                               class="form-control" placeholder="Enter answer ${newAnswerIndex + 1}" />
+                    `;
+                    answerContainer.appendChild(newInputDiv);
+                } else {
+                    alert("You can only add up to 6 answers.");
+                }
+            });
+        });
+    </script>
+}
+
+
