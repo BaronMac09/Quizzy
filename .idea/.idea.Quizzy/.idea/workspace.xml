@@ -8,12 +8,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="21e4f986-c595-4b86-856b-cb0e58feb235" name="Changes" comment="">
+    <list default="true" id="21e4f986-c595-4b86-856b-cb0e58feb235" name="Changes" comment="Update display style of Questions/Index">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Quizzy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Quizzy/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quizzy/Data/DbInitialiser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Data/DbInitialiser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quizzy/Models/Question.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Models/Question.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Create.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Create.cshtml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Details.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Edit.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Edit.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Edit.cshtml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Quizzy/Pages/Questions/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/Pages/Questions/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Quizzy/QuizzyContext-1e75ba36-07c1-435d-95d6-c7fc15949b34.db" beforeDir="false" afterPath="$PROJECT_DIR$/Quizzy/QuizzyContext-1e75ba36-07c1-435d-95d6-c7fc15949b34.db" afterDir="false" />
     </list>
@@ -124,7 +123,7 @@
       <workItem from="1736224953456" duration="6122000" />
       <workItem from="1736290290908" duration="4267000" />
       <workItem from="1736307962014" duration="10601000" />
-      <workItem from="1736338095490" duration="350000" />
+      <workItem from="1736338095490" duration="4950000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -158,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736311356545</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Update display style of Questions/Index">
+      <option name="closed" value="true" />
+      <created>1736338544969</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736338544969</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +178,7 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Testing Commit Author" />
     <MESSAGE value="Updating Correct GitHub Profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating Correct GitHub Profile" />
+    <MESSAGE value="Update display style of Questions/Index" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update display style of Questions/Index" />
   </component>
 </project>

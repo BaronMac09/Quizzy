@@ -21,7 +21,7 @@ namespace Quizzy.Pages.Questions
         }
 
         [BindProperty]
-        public Question Question { get; set; } = default!;
+        public Question? Question { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,42 +30,33 @@ namespace Quizzy.Pages.Questions
                 return NotFound();
             }
 
-            var question =  await _context.Questions.FirstOrDefaultAsync(m => m.Id == id);
-            if (question == null)
+            Question =  await _context.Questions.FindAsync(id);
+            if (Question == null)
             {
                 return NotFound();
             }
-            Question = question;
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (!ModelState.IsValid)
+            var questionToUpdate = await _context.Questions.FindAsync(id);
+            
+            if (questionToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Question).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!QuestionExists(Question.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            if (!await TryUpdateModelAsync<Question>(
+                    questionToUpdate,
+                    "question",
+                    q => q.Text, q => q.Answers, q => q.CorrectAnswer)) 
+                return RedirectToPage("./Index");
+            
+            questionToUpdate.LastModified = DateTime.Now;
+            await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
 

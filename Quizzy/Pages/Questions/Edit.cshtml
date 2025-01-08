@@ -2,51 +2,163 @@
 @model Quizzy.Pages.Questions.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Question";
 }
 
-<h1>Edit</h1>
+<h1>Edit Question</h1>
 
-<h4>Question</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="card shadow-sm">
+    <div class="card-body">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="Question.Id" />
-            <div class="form-group">
-                <label asp-for="Question.Text" class="control-label"></label>
+
+            <!-- Question Text -->
+            <div class="mb-3">
+                <label asp-for="Question.Text" class="form-label"></label>
                 <input asp-for="Question.Text" class="form-control" />
                 <span asp-validation-for="Question.Text" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Question.Answers" class="control-label"></label>
-                <input asp-for="Question.Answers" class="form-control" />
-                <span asp-validation-for="Question.Answers" class="text-danger"></span>
+
+            <!-- Answers -->
+            <div id="answerContainer" class="mb-3">
+                <label class="form-label">Answers:</label>
+                @for (var i = 0; i < Model.Question.Answers.Count; i++)
+                {
+                    <div class="input-group mb-2">
+                        <input name="Question.Answers[@i]" value="@Model.Question.Answers[i]"
+                               class="form-control" placeholder="Enter answer @(i + 1)" />
+                        <button type="button" class="btn btn-danger remove-answer">Remove</button>
+                    </div>
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="Question.CorrectAnswer" class="control-label"></label>
-                <input asp-for="Question.CorrectAnswer" class="form-control" />
-                <span asp-validation-for="Question.CorrectAnswer" class="text-danger"></span>
+            <button type="button" id="addAnswerButton" class="btn btn-success btn-sm">Add Answer</button>
+
+            <!-- Correct Answer -->
+            <div id="correctAnswerContainer" class="mb-3">
+                <label class="form-label">Select Correct Answer:</label>
+                <div class="d-flex flex-wrap">
+                    @foreach (var answer in Model.Question.Answers)
+                    {
+                        <div class="form-check me-3">
+                            <input type="radio"
+                                   name="Question.CorrectAnswer"
+                                   value="@answer"
+                                   class="form-check-input"
+                                   @(Model.Question.CorrectAnswer == answer ? "checked" : "") />
+                            <label class="form-check-label">@answer</label>
+                        </div>
+                    }
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Question.LastModified" class="control-label"></label>
-                <input asp-for="Question.LastModified" class="form-control" />
-                <span asp-validation-for="Question.LastModified" class="text-danger"></span>
+
+            <!-- Quiz IDs (Read-Only) -->
+            <div class="mb-3">
+                <label class="form-label">Linked Quizzes:</label>
+                <ul class="list-group">
+                    @foreach (var quizId in Model.Question.QuizIds)
+                    {
+                        <li class="list-group-item">Quiz ID: @quizId</li>
+                    }
+                </ul>
             </div>
-            <div class="form-group">
-                <label asp-for="Question.QuizIds" class="control-label"></label>
-                <input asp-for="Question.QuizIds" class="form-control" />
-                <span asp-validation-for="Question.QuizIds" class="text-danger"></span>
+
+            <!-- Last Modified (Read-Only) -->
+            <div class="mb-3">
+                <label asp-for="Question.LastModified" class="form-label"></label>
+                <input asp-for="Question.LastModified" class="form-control" readonly />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const answerContainer = document.getElementById("answerContainer");
+            const addAnswerButton = document.getElementById("addAnswerButton");
+            const correctAnswerContainer = document.getElementById("correctAnswerContainer");
 
+            let answerCount = @Model.Question.Answers.Count;
+
+            // Sync radio button labels and values with answer inputs
+            const syncRadioButtons = () => {
+                const answerInputs = answerContainer.querySelectorAll('input[name^="Question.Answers"]');
+                const radioInputs = correctAnswerContainer.querySelectorAll('input[type="radio"]');
+                const radioLabels = correctAnswerContainer.querySelectorAll('.form-check-label');
+
+                answerInputs.forEach((input, index) => {
+                    if (radioInputs[index]) {
+                        radioInputs[index].value = input.value || `Answer ${index + 1}`;
+                    }
+                    if (radioLabels[index]) {
+                        radioLabels[index].textContent = input.value || `Answer ${index + 1}`;
+                    }
+                });
+            };
+
+            // Add new answer
+            addAnswerButton.addEventListener("click", function () {
+                const newInputGroup = document.createElement("div");
+                newInputGroup.classList.add("input-group", "mb-2");
+                newInputGroup.innerHTML = `
+                    <input name="Question.Answers[${answerCount}]" 
+                           class="form-control" 
+                           placeholder="Enter answer ${answerCount + 1}" />
+                    <button type="button" class="btn btn-danger remove-answer">Remove</button>
+                `;
+                answerContainer.appendChild(newInputGroup);
+
+                // Add corresponding radio button for correct answer
+                const newRadioDiv = document.createElement("div");
+                newRadioDiv.classList.add("form-check", "me-3");
+                newRadioDiv.innerHTML = `
+                    <input type="radio" 
+                           name="Question.CorrectAnswer" 
+                           value="" 
+                           class="form-check-input" />
+                    <label class="form-check-label"></label>
+                `;
+                correctAnswerContainer.appendChild(newRadioDiv);
+
+                // Add event listener for new input field to sync labels and values
+                const newInput = newInputGroup.querySelector('input');
+                newInput.addEventListener("input", syncRadioButtons);
+
+                answerCount++;
+                syncRadioButtons();
+            });
+
+            // Remove an answer
+            answerContainer.addEventListener("click", function (event) {
+                if (event.target.classList.contains("remove-answer")) {
+                    const inputGroup = event.target.parentElement;
+                    const indexToRemove = Array.from(answerContainer.children).indexOf(inputGroup);
+
+                    // Remove the corresponding radio button
+                    const radioDiv = correctAnswerContainer.children[indexToRemove];
+                    if (radioDiv) radioDiv.remove();
+
+                    // Remove the input field
+                    inputGroup.remove();
+
+                    answerCount--;
+                    syncRadioButtons(); // Update after removal
+                }
+            });
+
+            // Add event listeners to existing inputs for real-time updates
+            const existingInputs = answerContainer.querySelectorAll('input[name^="Question.Answers"]');
+            existingInputs.forEach(input => {
+                input.addEventListener("input", syncRadioButtons);
+            });
+
+            // Initial synchronization of labels and values
+            syncRadioButtons();
+        });
+    </script>
+}
