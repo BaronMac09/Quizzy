@@ -13,32 +13,40 @@ namespace Quizzy.Pages.Questions
     public class DeleteModel : PageModel
     {
         private readonly Quizzy.Data.QuizzyContext _context;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(Quizzy.Data.QuizzyContext context)
+        public DeleteModel(Quizzy.Data.QuizzyContext context, ILogger<DeleteModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
-        public Question Question { get; set; } = default!;
+        public Question Question { get; set; } 
+        public string ErrorMessage { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var question = await _context.Questions.FirstOrDefaultAsync(m => m.Id == id);
+            Question = await _context.Questions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+                
 
-            if (question == null)
+            if (Question == null)
             {
                 return NotFound();
             }
-            else
+            
+            if (saveChangesError.GetValueOrDefault())
             {
-                Question = question;
+                ErrorMessage = String.Format("Delete {ID} failed. Try again", id);
             }
+           
             return Page();
         }
 
@@ -50,14 +58,23 @@ namespace Quizzy.Pages.Questions
             }
 
             var question = await _context.Questions.FindAsync(id);
-            if (question != null)
+            
+            if (question == null)
             {
-                Question = question;
-                _context.Questions.Remove(Question);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-
-            return RedirectToPage("./Index");
+            
+            try
+            {
+                _context.Questions.Remove(question);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, ErrorMessage);
+                return RedirectToAction("./Delete", new { id, saveChangesError = true });
+            }
         }
     }
 }

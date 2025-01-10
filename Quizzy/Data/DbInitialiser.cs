@@ -13,29 +13,29 @@ public static class DbInitialiser
         }
         
         // Otherwise, create new questions
-        var questions = new Question[]
+        var questions = new List<Question>
         {
             new Question
             {
-                Id = 1, QuizIds = [],
+                Id = 1,
                 Text = "What is the capital of France?", CorrectAnswer = "Paris",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 2, QuizIds = [],
+                Id = 2, 
                 Text = "What is the capital of Germany?", CorrectAnswer = "Berlin",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 3, QuizIds = [],
+                Id = 3,
                 Text = "What is the capital of Spain?", CorrectAnswer = "Madrid",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 4, QuizIds = [],
+                Id = 4,
                 Text = "What is the capital of the UK?", CorrectAnswer = "London",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
@@ -48,11 +48,34 @@ public static class DbInitialiser
         {
             new Quiz
             {
-                Id = 1, Title = "Capitals of Europe", Questions = questions, LastModified = DateTime.Now
+                QuizID = 1, Title = "Capitals of Europe", LastModified = DateTime.Now
+            }
+        };  
+        
+        context.Quizzes.AddRange(quizzes);
+        context.SaveChanges();
+        
+        var assignments = new Assignment[]
+        {
+            new Assignment
+            {
+                AssignmentId = 1, QuizId = 1, QuestionId = 1
+            },
+            new Assignment
+            {
+                AssignmentId = 2, QuizId = 1, QuestionId = 2
+            },
+            new Assignment
+            {
+                AssignmentId = 3, QuizId = 1, QuestionId = 3
+            },
+            new Assignment
+            {
+                AssignmentId = 4, QuizId = 1, QuestionId = 4
             }
         };
         
-        context.Quizzes.AddRange(quizzes);
+        context.Assignments.AddRange(assignments);
         context.SaveChanges();
     }
 }

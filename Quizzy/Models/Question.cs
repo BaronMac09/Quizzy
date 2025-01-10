@@ -8,5 +8,5 @@ public class Question
     public string CorrectAnswer { get; set; }
     public DateTime LastModified { get; set; }
 
-    public List<int> QuizIds { get; set; } = []; // Many-to-Many relationship
+    public ICollection<Assignment> Assignments { get; set; } = []; // One-to-many relationship
 }

@@ -31,6 +31,7 @@ namespace Quizzy.Pages.Questions
             }
 
             Question =  await _context.Questions.FindAsync(id);
+            
             if (Question == null)
             {
                 return NotFound();
@@ -53,7 +54,7 @@ namespace Quizzy.Pages.Questions
                     questionToUpdate,
                     "question",
                     q => q.Text, q => q.Answers, q => q.CorrectAnswer)) 
-                return RedirectToPage("./Index");
+                return Page();
             
             questionToUpdate.LastModified = DateTime.Now;
             await _context.SaveChangesAsync();

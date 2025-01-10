@@ -499,7 +499,7 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-01-02.22:25:15</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-01-10.07:04:12</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1590,131 +1590,153 @@
     <argument id="554" parent="190">
       <Position>1</Position>
     </argument>
-    <table id="555" parent="191" name="Attempt"/>
-    <table id="556" parent="191" name="Question"/>
-    <table id="557" parent="191" name="Quiz"/>
-    <table id="558" parent="191" name="sqlite_master">
+    <table id="555" parent="191" name="Assignment"/>
+    <table id="556" parent="191" name="Attempt"/>
+    <table id="557" parent="191" name="Question"/>
+    <table id="558" parent="191" name="Quiz"/>
+    <table id="559" parent="191" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="559" parent="191" name="sqlite_sequence">
+    <table id="560" parent="191" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <column id="560" parent="555" name="Id">
+    <column id="561" parent="555" name="AssignmentId">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="561" parent="555" name="QuizId">
+    <column id="562" parent="555" name="QuizId">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="562" parent="555" name="Score">
+    <column id="563" parent="555" name="QuestionId">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <foreign-key id="564" parent="555" name="FK_Assignment_Quiz_QuizId">
+      <ColNames>QuizId</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>QuizID</RefColNames>
+      <RefTableName>Quiz</RefTableName>
+    </foreign-key>
+    <foreign-key id="565" parent="555" name="FK_Assignment_Question_QuestionId">
+      <ColNames>QuestionId</ColNames>
+      <OnDelete>cascade</OnDelete>
+      <RefColNames>Id</RefColNames>
+      <RefTableName>Question</RefTableName>
+    </foreign-key>
+    <index id="566" parent="555" name="IX_Assignment_QuizId">
+      <ColNames>QuizId</ColNames>
+    </index>
+    <index id="567" parent="555" name="IX_Assignment_QuestionId">
+      <ColNames>QuestionId</ColNames>
+    </index>
+    <key id="568" parent="555" name="PK_Assignment">
+      <ColNames>AssignmentId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="569" parent="556" name="Id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <column id="570" parent="556" name="QuizId">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <column id="571" parent="556" name="Score">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>REAL|0s</StoredType>
     </column>
-    <column id="563" parent="555" name="DateTaken">
+    <column id="572" parent="556" name="DateTaken">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <key id="564" parent="555" name="PK_Attempt">
+    <key id="573" parent="556" name="PK_Attempt">
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="565" parent="556" name="Id">
+    <column id="574" parent="557" name="Id">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="566" parent="556" name="Text">
+    <column id="575" parent="557" name="Text">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="567" parent="556" name="Answers">
+    <column id="576" parent="557" name="Answers">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="568" parent="556" name="CorrectAnswer">
+    <column id="577" parent="557" name="CorrectAnswer">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="569" parent="556" name="LastModified">
+    <column id="578" parent="557" name="LastModified">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="570" parent="556" name="QuizIds">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StoredType>TEXT|0s</StoredType>
-    </column>
-    <column id="571" parent="556" name="QuizId">
-      <Position>7</Position>
-      <StoredType>INTEGER|0s</StoredType>
-    </column>
-    <foreign-key id="572" parent="556" name="FK_Question_Quiz_QuizId">
-      <ColNames>QuizId</ColNames>
-      <RefColNames>Id</RefColNames>
-      <RefTableName>Quiz</RefTableName>
-    </foreign-key>
-    <index id="573" parent="556" name="IX_Question_QuizId">
-      <ColNames>QuizId</ColNames>
-    </index>
-    <key id="574" parent="556" name="PK_Question">
+    <key id="579" parent="557" name="PK_Question">
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="575" parent="557" name="Id">
+    <column id="580" parent="558" name="QuizID">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="576" parent="557" name="Title">
+    <column id="581" parent="558" name="Title">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="577" parent="557" name="LastModified">
+    <column id="582" parent="558" name="LastModified">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <key id="578" parent="557" name="PK_Quiz">
-      <ColNames>Id</ColNames>
+    <key id="583" parent="558" name="PK_Quiz">
+      <ColNames>QuizID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="579" parent="558" name="type">
+    <column id="584" parent="559" name="type">
       <Position>1</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="580" parent="558" name="name">
+    <column id="585" parent="559" name="name">
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="581" parent="558" name="tbl_name">
+    <column id="586" parent="559" name="tbl_name">
       <Position>3</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="582" parent="558" name="rootpage">
+    <column id="587" parent="559" name="rootpage">
       <Position>4</Position>
       <StoredType>INT|0s</StoredType>
     </column>
-    <column id="583" parent="558" name="sql">
+    <column id="588" parent="559" name="sql">
       <Position>5</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <column id="584" parent="559" name="name">
+    <column id="589" parent="560" name="name">
       <Position>1</Position>
     </column>
-    <column id="585" parent="559" name="seq">
+    <column id="590" parent="560" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

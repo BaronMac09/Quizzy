@@ -31,19 +31,21 @@ namespace Quizzy.Pages.Questions
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            // Set the LastModified property to the current date and time
-            Question.LastModified = DateTime.Now;
+            var emptyQuestion = new Question();
             
-            if (!ModelState.IsValid)
+            if (await TryUpdateModelAsync<Question>(
+                    emptyQuestion, 
+                    "Question", 
+                    q => q.Text, q => q.Answers, q => q.CorrectAnswer))
             {
-                return Page();
+                // Set the LastModified property to the current date and time
+                emptyQuestion.LastModified = DateTime.Now;
+                _context.Questions.Add(emptyQuestion);
+                await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
             
-            
-            _context.Questions.Add(Question);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

@@ -28,7 +28,13 @@ namespace Quizzy.Pages.Questions
                 return NotFound();
             }
 
-            var question = await _context.Questions.FirstOrDefaultAsync(m => m.Id == id);
+            // var question = await _context.Questions.FirstOrDefaultAsync(m => m.Id == id);
+            var question = await _context.Questions
+                .Include(q => q.Assignments)
+                .ThenInclude(a => a.Quiz)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+            
             if (question == null)
             {
                 return NotFound();

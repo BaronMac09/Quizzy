@@ -11,6 +11,8 @@
     <div class="card-header bg-primary text-white">
         <h5>@Model.Question.Text</h5>
     </div>
+    
+    <!-- The card body contains the question's answers, correct answer, last modified date, and quizzes it is included in -->
     <div class="card-body">
         <p><strong>Answers:</strong></p>
         <ul class="list-group mb-3">
@@ -19,9 +21,18 @@
                 <li class="list-group-item">@answer</li>
             }
         </ul>
+        
         <p><strong>Correct Answer:</strong> <span class="text-success">@Model.Question.CorrectAnswer</span></p>
+        
         <p><strong>Last Modified:</strong> <span class="text-muted">@Model.Question.LastModified</span></p>
-        <p><strong>Quiz IDs:</strong> <span class="text-secondary">@string.Join(", ", Model.Question.QuizIds)</span></p>
+        
+        <p><strong>Included in the following Quizzes:</strong></p>
+        <ul class="list-group mb-3">
+            @foreach (var item in Model.Question.Assignments)
+            {
+                <li class="list-group-item">@item.Quiz.Title</li>
+            }
+        </ul>
     </div>
     <div class="card-footer text-end">
         <a asp-page="./Edit" asp-route-id="@Model.Question.Id" class="btn btn-warning btn-sm">Edit</a>
