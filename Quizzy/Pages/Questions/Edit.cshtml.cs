@@ -63,7 +63,7 @@ namespace Quizzy.Pages.Questions
 
         private bool QuestionExists(int id)
         {
-            return _context.Questions.Any(e => e.Id == id);
+            return _context.Questions.Any(e => e.QuestionId == id);
         }
     }
 }

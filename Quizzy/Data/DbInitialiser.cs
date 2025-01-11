@@ -17,25 +17,25 @@ public static class DbInitialiser
         {
             new Question
             {
-                Id = 1,
+                QuestionId = 1,
                 Text = "What is the capital of France?", CorrectAnswer = "Paris",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 2, 
+                QuestionId = 2, 
                 Text = "What is the capital of Germany?", CorrectAnswer = "Berlin",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 3,
+                QuestionId = 3,
                 Text = "What is the capital of Spain?", CorrectAnswer = "Madrid",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
             new Question
             {
-                Id = 4,
+                QuestionId = 4,
                 Text = "What is the capital of the UK?", CorrectAnswer = "London",
                 Answers = ["Paris", "London", "Berlin", "Madrid"], LastModified = DateTime.Now
             },
@@ -48,7 +48,7 @@ public static class DbInitialiser
         {
             new Quiz
             {
-                QuizID = 1, Title = "Capitals of Europe", LastModified = DateTime.Now
+                QuizId = 1, Title = "Capitals of Europe", LastModified = DateTime.Now
             }
         };  
         

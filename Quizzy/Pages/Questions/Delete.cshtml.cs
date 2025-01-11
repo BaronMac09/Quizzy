@@ -34,7 +34,7 @@ namespace Quizzy.Pages.Questions
 
             Question = await _context.Questions
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.QuestionId == id);
                 
 
             if (Question == null)

@@ -33,7 +33,7 @@ namespace Quizzy.Pages.Questions
                 .Include(q => q.Assignments)
                 .ThenInclude(a => a.Quiz)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.QuestionId == id);
             
             if (question == null)
             {
