@@ -77,5 +77,16 @@ public static class DbInitialiser
         
         context.Assignments.AddRange(assignments);
         context.SaveChanges();
+
+        var attempts = new Attempt[]
+        {
+            new Attempt
+            {
+                AttemptId = 1, DateTaken = DateTime.Now, QuizId = 1, Score = 50
+            }
+        };
+        
+        context.Attempts.AddRange(attempts);
+        context.SaveChanges();
     }
 }

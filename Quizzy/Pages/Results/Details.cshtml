@@ -1,0 +1,15 @@
+@page "{id:int}"
+@model Quizzy.Pages.Results.DetailsModel
+
+@{
+    ViewData["Title"] = "Quiz Attempt Details";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title"><strong>Quiz:</strong> @Model.QuizTitle</h3>
+        <p class="card-text"><strong>Score:</strong> @Model.Attempt.Score%</p>
+        <p class="card-text"><strong>Date Taken:</strong> @Model.Attempt.DateTaken</p>
+        <a asp-page="./Index" class="btn btn-secondary">Back to All Results</a>
+    </div>
+</div>

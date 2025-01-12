@@ -499,7 +499,7 @@
     </routine>
     <schema id="191" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-01-10.07:04:12</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-01-11.12:46:19</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="192" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1625,7 +1625,7 @@
     <foreign-key id="565" parent="555" name="FK_Assignment_Question_QuestionId">
       <ColNames>QuestionId</ColNames>
       <OnDelete>cascade</OnDelete>
-      <RefColNames>Id</RefColNames>
+      <RefColNames>QuestionId</RefColNames>
       <RefTableName>Question</RefTableName>
     </foreign-key>
     <index id="566" parent="555" name="IX_Assignment_QuizId">
@@ -1638,7 +1638,7 @@
       <ColNames>AssignmentId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="569" parent="556" name="Id">
+    <column id="569" parent="556" name="AttemptId">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1660,10 +1660,10 @@
       <StoredType>TEXT|0s</StoredType>
     </column>
     <key id="573" parent="556" name="PK_Attempt">
-      <ColNames>Id</ColNames>
+      <ColNames>AttemptId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="574" parent="557" name="Id">
+    <column id="574" parent="557" name="QuestionId">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1690,10 +1690,10 @@
       <StoredType>TEXT|0s</StoredType>
     </column>
     <key id="579" parent="557" name="PK_Question">
-      <ColNames>Id</ColNames>
+      <ColNames>QuestionId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="580" parent="558" name="QuizID">
+    <column id="580" parent="558" name="QuizId">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1710,7 +1710,7 @@
       <StoredType>TEXT|0s</StoredType>
     </column>
     <key id="583" parent="558" name="PK_Quiz">
-      <ColNames>QuizID</ColNames>
+      <ColNames>QuizId</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="584" parent="559" name="type">

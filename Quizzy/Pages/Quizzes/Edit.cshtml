@@ -1,0 +1,90 @@
+@page
+@model Quizzy.Pages.Quizzes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Quiz</h1>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5>@Model.Quiz.Title</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <!-- Hidden Field for Quiz ID -->
+                    <input type="hidden" asp-for="Quiz.QuizId" />
+
+                    <!-- Quiz Title -->
+                    <div class="form-group">
+                        <label asp-for="Quiz.Title" class="control-label"></label>
+                        <input asp-for="Quiz.Title" class="form-control" placeholder="Enter quiz title" />
+                        <span asp-validation-for="Quiz.Title" class="text-danger"></span>
+                    </div>
+
+                    <!-- Quiz Last Modified -->
+                    <input type="hidden" asp-for="Quiz.LastModified" />
+                    
+                    <br />
+
+                    <!-- Questions Selection -->
+                    <div class="form-group">
+                        <h5>
+                            Select Questions
+                            <button class="btn btn-link text-decoration-none" type="button" data-bs-toggle="collapse" data-bs-target="#questionsCollapse" aria-expanded="false" aria-controls="questionsCollapse">
+                                Toggle List
+                            </button>
+                        </h5>
+                        
+                        <div id="questionsCollapse" class="collapse show">
+                            <ul class="list-unstyled">
+                                @foreach (var question in Model.Questions)
+                                {
+                                    <li class="mb-2">
+                                        <input type="checkbox"
+                                               name="SelectedQuestionIds"
+                                               value="@question.QuestionId"
+                                               id="question-@question.QuestionId"
+                                               class="question-checkbox"
+                                               @(Model.SelectedQuestionIds.Contains(question.QuestionId) ? "checked" : "") />
+                                        <label for="question-@question.QuestionId" class="ms-2">@question.Text</label>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="selectAll" onclick="toggleSelectAll(this)">
+                            <label class="form-check-label" for="selectAll">Select All</label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group text-center">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Toggle Select All checkboxes
+        function toggleSelectAll(source) {
+            const checkboxes = document.querySelectorAll('.question-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = source.checked;
+            });
+        }
+    </script>
+}

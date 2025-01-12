@@ -1,0 +1,38 @@
+@page
+@model Quizzy.Pages.Quizzes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Quizzes</h1>
+
+<div class="container">
+    @foreach (var quiz in Model.Quiz)
+    {
+        <div class="card mb-4 w-100">
+            <div class="card-header bg-primary text-white">
+                <h5>@quiz.Title</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Last Modified:</strong> @quiz.LastModified.ToString("g")</p>
+                <h6>Questions:</h6>
+                <ul>
+                    @foreach (var assignment in quiz.Assignments)
+                    {
+                        <li>@assignment.Question.Text</li>
+                    }
+                </ul>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-page="./TakeQuiz" asp-route-id="@quiz.QuizId" class="btn btn-primary">Take Quiz</a>
+                <a asp-page="./Edit" asp-route-id="@quiz.QuizId" class="btn btn-warning btn-sm">Edit</a>
+                <a asp-page="./Delete" asp-route-id="@quiz.QuizId" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New Quiz</a>
+</p>

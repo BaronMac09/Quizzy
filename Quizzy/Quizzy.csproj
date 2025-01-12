@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Pages\Questions\" />
-      <Folder Include="Pages\Quizzes\" />
     </ItemGroup>
 
     <ItemGroup>
